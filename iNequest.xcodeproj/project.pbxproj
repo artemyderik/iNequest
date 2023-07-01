@@ -13,6 +13,8 @@
 		947303CF2A4FF4F900A3C094 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947303CD2A4FF4F900A3C094 /* Main.storyboard */; };
 		947303D12A4FF4FB00A3C094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947303D02A4FF4FB00A3C094 /* Assets.xcassets */; };
 		947303D42A4FF4FB00A3C094 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947303D22A4FF4FB00A3C094 /* LaunchScreen.storyboard */; };
+		947303DC2A4FF54200A3C094 /* CartoonPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303DB2A4FF54200A3C094 /* CartoonPerson.swift */; };
+		947303DF2A4FFF1700A3C094 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303DE2A4FFF1600A3C094 /* Links.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		947303D02A4FF4FB00A3C094 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		947303D32A4FF4FB00A3C094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		947303D52A4FF4FB00A3C094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		947303DB2A4FF54200A3C094 /* CartoonPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonPerson.swift; sourceTree = "<group>"; };
+		947303DE2A4FFF1600A3C094 /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,65 @@
 		947303C62A4FF4F900A3C094 /* iNequest */ = {
 			isa = PBXGroup;
 			children = (
-				947303C72A4FF4F900A3C094 /* AppDelegate.swift */,
-				947303C92A4FF4F900A3C094 /* SceneDelegate.swift */,
-				947303CB2A4FF4F900A3C094 /* ViewController.swift */,
-				947303CD2A4FF4F900A3C094 /* Main.storyboard */,
-				947303D02A4FF4FB00A3C094 /* Assets.xcassets */,
-				947303D22A4FF4FB00A3C094 /* LaunchScreen.storyboard */,
+				947303E12A50003B00A3C094 /* App */,
+				947303DD2A4FFDB300A3C094 /* Model */,
+				947303E42A50006300A3C094 /* ViewControllers */,
+				947303E02A50002E00A3C094 /* NetData */,
+				947303E22A50004500A3C094 /* Storyboards */,
+				947303E32A50005200A3C094 /* Resources */,
 				947303D52A4FF4FB00A3C094 /* Info.plist */,
 			);
 			path = iNequest;
+			sourceTree = "<group>";
+		};
+		947303DD2A4FFDB300A3C094 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				947303DB2A4FF54200A3C094 /* CartoonPerson.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		947303E02A50002E00A3C094 /* NetData */ = {
+			isa = PBXGroup;
+			children = (
+				947303DE2A4FFF1600A3C094 /* Links.swift */,
+			);
+			path = NetData;
+			sourceTree = "<group>";
+		};
+		947303E12A50003B00A3C094 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				947303C72A4FF4F900A3C094 /* AppDelegate.swift */,
+				947303C92A4FF4F900A3C094 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		947303E22A50004500A3C094 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				947303CD2A4FF4F900A3C094 /* Main.storyboard */,
+				947303D22A4FF4FB00A3C094 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		947303E32A50005200A3C094 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				947303D02A4FF4FB00A3C094 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		947303E42A50006300A3C094 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				947303CB2A4FF4F900A3C094 /* ViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +194,9 @@
 			files = (
 				947303CC2A4FF4F900A3C094 /* ViewController.swift in Sources */,
 				947303C82A4FF4F900A3C094 /* AppDelegate.swift in Sources */,
+				947303DF2A4FFF1700A3C094 /* Links.swift in Sources */,
 				947303CA2A4FF4F900A3C094 /* SceneDelegate.swift in Sources */,
+				947303DC2A4FF54200A3C094 /* CartoonPerson.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,9 +357,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ArtemyDerik.iNequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -328,9 +387,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ArtemyDerik.iNequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
