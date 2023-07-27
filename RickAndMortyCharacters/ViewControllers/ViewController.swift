@@ -18,7 +18,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 
     //MARK: Private Properties
-    private let links = Link.allCases
     private var selectedLink = ""
     private var nextPageLink = ""
     private var allLinks = [String]()
@@ -35,9 +34,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         setupViews()
     }
-    
+     
     //MARK: OBJC Methods
-    @objc func fetchButtonTapped() {
+    @objc func fetchButtonTapped() {   
         fetchCharacter()
     }
     
@@ -201,8 +200,38 @@ extension ViewController {
 
 //MARK: Networking
 extension ViewController {
+    private func getAllLinks(with url: String) {
+        NetworkManager.shared.fetch(Page.self, from: url) { [weak self] result in
+            switch result {
+            case .success(let page):
+                
+                for index in 0..<page.results.count {
+                    self?.allLinks.append(page.results[index].url)
+                    self?.allNames.append(page.results[index].name)
+                }
+                
+                guard let nextPageLink = page.info.next else { return }
+                self?.nextPageLink = nextPageLink
+                
+                self?.selectedLink = self?.allLinks[1] ?? ""
+                self?.linkPickerView.reloadAllComponents()
+                self?.linkPickerView.selectRow(1, inComponent: 0, animated: true)
+                
+                if let nextPageLink = self?.nextPageLink, !nextPageLink.isEmpty {
+                    self?.getAllLinks(with: nextPageLink)
+                }
+                                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.linkPickerView.layer.opacity = 0
+                }
+                print(error)
+            }
+        }
+    }
+    
     private func fetchCharacter() {
-        NetworkManager.shared.fetchCharacter(from: selectedLink) { [weak self] result in
+        NetworkManager.shared.fetch(Character.self, from: selectedLink){ [weak self] result in
             switch result {
             case .success(let character):
                 self?.fetchImage(with: character.image)
@@ -233,33 +262,6 @@ extension ViewController {
             case .success(let imageData):
                 self?.imageView.image = UIImage(data: imageData)
                 self?.activityIndicator.stopAnimating()
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func getAllLinks(with url: String) {
-        NetworkManager.shared.fetchPage(from: url) { [weak self] result in
-            switch result {
-            case .success(let page):
-                
-                for index in 0..<page.results.count {
-                    self?.allLinks.append(page.results[index].url)
-                    self?.allNames.append(page.results[index].name)
-                }
-                
-                guard let nextPageLink = page.info.next else { return }
-                self?.nextPageLink = nextPageLink
-                
-                self?.selectedLink = self?.allLinks[1] ?? ""
-                self?.linkPickerView.reloadAllComponents()
-                self?.linkPickerView.selectRow(1, inComponent: 0, animated: true)
-                
-                if let nextPageLink = self?.nextPageLink, !nextPageLink.isEmpty {
-                    self?.getAllLinks(with: nextPageLink)
-                }
-                
             case .failure(let error):
                 print(error)
             }

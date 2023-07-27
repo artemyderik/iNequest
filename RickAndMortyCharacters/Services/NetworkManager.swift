@@ -32,8 +32,8 @@ class NetworkManager {
     static let shared = NetworkManager()
     
     private init() {}
-    
-    func fetchPage(from url: String, completion: @escaping(Result<Page, NetworkError>) -> Void) {
+
+    func fetch<T: Decodable>(_ type: T.Type, from url: String, completion: @escaping(Result<T, NetworkError>) -> Void) {
         guard let url = URL(string: url) else {
             completion(.failure(.invalidURL))
             return
@@ -46,9 +46,9 @@ class NetworkManager {
             }
             
             do {
-                let page = try JSONDecoder().decode(Page.self, from: data)
+                let type = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(page))
+                    completion(.success(type))
                 }
             }
             catch {
@@ -57,32 +57,7 @@ class NetworkManager {
             
         }.resume()
     }
-    
-    func fetchCharacter(from url: String, completion: @escaping(Result<Character, NetworkError>) -> Void) {
-        guard let url = URL(string: url) else {
-            completion(.failure(.invalidURL))
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
-            }
-            
-            do {
-                let character = try JSONDecoder().decode(Character.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(character))
-                }
-            }
-            catch {
-                completion(.failure(.decodingError))
-            }
-            
-        }.resume()
-    }
-    
+
     func fetchImage(from url: String, completion: @escaping(Result<Data, NetworkError>) -> Void) {
         guard let url = URL(string: url) else {
             completion(.failure(.invalidURL))
