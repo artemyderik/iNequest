@@ -13,12 +13,12 @@
 		947303CF2A4FF4F900A3C094 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947303CD2A4FF4F900A3C094 /* Main.storyboard */; };
 		947303D12A4FF4FB00A3C094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947303D02A4FF4FB00A3C094 /* Assets.xcassets */; };
 		947303D42A4FF4FB00A3C094 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947303D22A4FF4FB00A3C094 /* LaunchScreen.storyboard */; };
-		947303DC2A4FF54200A3C094 /* CartoonPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303DB2A4FF54200A3C094 /* CartoonPerson.swift */; };
-		947303DF2A4FFF1700A3C094 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303DE2A4FFF1600A3C094 /* Links.swift */; };
+		947303DC2A4FF54200A3C094 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303DB2A4FF54200A3C094 /* Models.swift */; };
+		947303E62A55533C00A3C094 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303E52A55533C00A3C094 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		947303C42A4FF4F900A3C094 /* iNequest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iNequest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		947303C42A4FF4F900A3C094 /* RickAndMorty, Characters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RickAndMorty, Characters.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		947303C72A4FF4F900A3C094 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		947303C92A4FF4F900A3C094 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		947303CB2A4FF4F900A3C094 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,8 +26,8 @@
 		947303D02A4FF4FB00A3C094 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		947303D32A4FF4FB00A3C094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		947303D52A4FF4FB00A3C094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		947303DB2A4FF54200A3C094 /* CartoonPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonPerson.swift; sourceTree = "<group>"; };
-		947303DE2A4FFF1600A3C094 /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
+		947303DB2A4FF54200A3C094 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		947303E52A55533C00A3C094 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 		947303BB2A4FF4F900A3C094 = {
 			isa = PBXGroup;
 			children = (
-				947303C62A4FF4F900A3C094 /* iNequest */,
+				947303C62A4FF4F900A3C094 /* RickAndMortyCharacters */,
 				947303C52A4FF4F900A3C094 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,39 +52,39 @@
 		947303C52A4FF4F900A3C094 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				947303C42A4FF4F900A3C094 /* iNequest.app */,
+				947303C42A4FF4F900A3C094 /* RickAndMorty, Characters.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		947303C62A4FF4F900A3C094 /* iNequest */ = {
+		947303C62A4FF4F900A3C094 /* RickAndMortyCharacters */ = {
 			isa = PBXGroup;
 			children = (
 				947303E12A50003B00A3C094 /* App */,
-				947303DD2A4FFDB300A3C094 /* Model */,
+				947303DD2A4FFDB300A3C094 /* Models */,
 				947303E42A50006300A3C094 /* ViewControllers */,
-				947303E02A50002E00A3C094 /* NetData */,
+				947303E02A50002E00A3C094 /* Services */,
 				947303E22A50004500A3C094 /* Storyboards */,
 				947303E32A50005200A3C094 /* Resources */,
 				947303D52A4FF4FB00A3C094 /* Info.plist */,
 			);
-			path = iNequest;
+			path = RickAndMortyCharacters;
 			sourceTree = "<group>";
 		};
-		947303DD2A4FFDB300A3C094 /* Model */ = {
+		947303DD2A4FFDB300A3C094 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				947303DB2A4FF54200A3C094 /* CartoonPerson.swift */,
+				947303DB2A4FF54200A3C094 /* Models.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		947303E02A50002E00A3C094 /* NetData */ = {
+		947303E02A50002E00A3C094 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				947303DE2A4FFF1600A3C094 /* Links.swift */,
+				947303E52A55533C00A3C094 /* NetworkManager.swift */,
 			);
-			path = NetData;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		947303E12A50003B00A3C094 /* App */ = {
@@ -124,9 +124,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		947303C32A4FF4F900A3C094 /* iNequest */ = {
+		947303C32A4FF4F900A3C094 /* RickAndMorty, Characters */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 947303D82A4FF4FB00A3C094 /* Build configuration list for PBXNativeTarget "iNequest" */;
+			buildConfigurationList = 947303D82A4FF4FB00A3C094 /* Build configuration list for PBXNativeTarget "RickAndMorty, Characters" */;
 			buildPhases = (
 				947303C02A4FF4F900A3C094 /* Sources */,
 				947303C12A4FF4F900A3C094 /* Frameworks */,
@@ -136,9 +136,9 @@
 			);
 			dependencies = (
 			);
-			name = iNequest;
+			name = "RickAndMorty, Characters";
 			productName = iNequest;
-			productReference = 947303C42A4FF4F900A3C094 /* iNequest.app */;
+			productReference = 947303C42A4FF4F900A3C094 /* RickAndMorty, Characters.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -156,7 +156,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 947303BF2A4FF4F900A3C094 /* Build configuration list for PBXProject "iNequest" */;
+			buildConfigurationList = 947303BF2A4FF4F900A3C094 /* Build configuration list for PBXProject "RickAndMortyCharacters" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -169,7 +169,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				947303C32A4FF4F900A3C094 /* iNequest */,
+				947303C32A4FF4F900A3C094 /* RickAndMorty, Characters */,
 			);
 		};
 /* End PBXProject section */
@@ -192,11 +192,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				947303E62A55533C00A3C094 /* NetworkManager.swift in Sources */,
 				947303CC2A4FF4F900A3C094 /* ViewController.swift in Sources */,
 				947303C82A4FF4F900A3C094 /* AppDelegate.swift in Sources */,
-				947303DF2A4FFF1700A3C094 /* Links.swift in Sources */,
 				947303CA2A4FF4F900A3C094 /* SceneDelegate.swift in Sources */,
-				947303DC2A4FF54200A3C094 /* CartoonPerson.swift in Sources */,
+				947303DC2A4FF54200A3C094 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,19 +343,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6PZ2VM529M;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iNequest/Info.plist;
+				INFOPLIST_FILE = RickAndMortyCharacters/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ArtemyDerik.iNequest;
+				PRODUCT_BUNDLE_IDENTIFIER = ArtemyDerik.RickAndMortyCharacters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -373,19 +374,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6PZ2VM529M;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iNequest/Info.plist;
+				INFOPLIST_FILE = RickAndMortyCharacters/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ArtemyDerik.iNequest;
+				PRODUCT_BUNDLE_IDENTIFIER = ArtemyDerik.RickAndMortyCharacters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -399,7 +401,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		947303BF2A4FF4F900A3C094 /* Build configuration list for PBXProject "iNequest" */ = {
+		947303BF2A4FF4F900A3C094 /* Build configuration list for PBXProject "RickAndMortyCharacters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				947303D62A4FF4FB00A3C094 /* Debug */,
@@ -408,7 +410,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		947303D82A4FF4FB00A3C094 /* Build configuration list for PBXNativeTarget "iNequest" */ = {
+		947303D82A4FF4FB00A3C094 /* Build configuration list for PBXNativeTarget "RickAndMorty, Characters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				947303D92A4FF4FB00A3C094 /* Debug */,
