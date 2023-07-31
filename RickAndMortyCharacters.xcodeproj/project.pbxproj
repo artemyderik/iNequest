@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		941AAA802A73DB6500D93809 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941AAA7F2A73DB6500D93809 /* File.swift */; };
 		947303C82A4FF4F900A3C094 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303C72A4FF4F900A3C094 /* AppDelegate.swift */; };
 		947303CA2A4FF4F900A3C094 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303C92A4FF4F900A3C094 /* SceneDelegate.swift */; };
 		947303CC2A4FF4F900A3C094 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947303CB2A4FF4F900A3C094 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		941AAA7F2A73DB6500D93809 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		947303C42A4FF4F900A3C094 /* RickAndMorty, Characters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RickAndMorty, Characters.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		947303C72A4FF4F900A3C094 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		947303C92A4FF4F900A3C094 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				947303CB2A4FF4F900A3C094 /* ViewController.swift */,
+				941AAA7F2A73DB6500D93809 /* File.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				947303E62A55533C00A3C094 /* NetworkManager.swift in Sources */,
+				941AAA802A73DB6500D93809 /* File.swift in Sources */,
 				947303CC2A4FF4F900A3C094 /* ViewController.swift in Sources */,
 				947303C82A4FF4F900A3C094 /* AppDelegate.swift in Sources */,
 				947303CA2A4FF4F900A3C094 /* SceneDelegate.swift in Sources */,

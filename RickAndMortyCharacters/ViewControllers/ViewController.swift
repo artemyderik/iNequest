@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController {
     
     //MARK: Outlets
     private let imageView = UIImageView()
@@ -15,13 +15,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     private let isAliveView = UIView()
     private let fetchButton = UIButton(type: .system)
     private let linkPickerView = UIPickerView()
-    private let activityIndicator = UIActivityIndicatorView(style: .large)
-
+    private let imageActivityIndicator = UIActivityIndicatorView(style: .large)
+    private let pickerActivityIndicator = UIActivityIndicatorView(style: .large)
+    private let statusSegmentedControl = UISegmentedControl(items: ["All", "Dead", "Alive", "Unknown"])
+    
     //MARK: Private Properties
     private var selectedLink = ""
-    private var nextPageLink = ""
+    private var selectedLinks = [String]()
+    private var selectedNames = [String]()
+        
     private var allLinks = [String]()
+    private var deadLinks = [String]()
+    private var aliveLinks = [String]()
+    private var unknownLinks = [String]()
+    
     private var allNames = [String]()
+    private var deadNames = [String]()
+    private var aliveNames = [String]()
+    private var unknownNames = [String]()
     
     //MARK: Override Methods
     override func viewDidLoad() {
@@ -34,33 +45,58 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         setupViews()
     }
-     
+    
     //MARK: OBJC Methods
-    @objc func fetchButtonTapped() {   
+    @objc private func fetchButtonTapped() {
         fetchCharacter()
+    }
+    
+    @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            setNewValues(from: allLinks, and: allNames)
+        case 1:
+            setNewValues(from: deadLinks, and: deadNames)
+        case 2:
+            setNewValues(from: aliveLinks, and: aliveNames)
+        default:
+            setNewValues(from: unknownLinks, and: unknownNames)
+        }
     }
     
     //MARK: Private Methods
     private func getSelectedOption(_ selectedOption: String) {
         selectedLink = selectedOption
-      }
+    }
     
-    //MARK: UIPickerView DataSource
+    private func setNewValues(from links: [String], and names: [String]) {
+        selectedLink = links[1]
+        linkPickerView.selectRow(1, inComponent: 0, animated: true)
+        selectedNames = names
+        selectedLinks = links
+        linkPickerView.reloadAllComponents()
+    }
+}
+
+//MARK: UIPickerView DataSource
+extension ViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        allLinks.count
+        selectedLinks.count
     }
-    
-    //MARK: UIPickerView Delegate
+}
+
+//MARK: UIPickerView Delegate
+extension ViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        allNames[row]
+        selectedNames[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        getSelectedOption(allLinks[row])
+        getSelectedOption(selectedLinks[row])
     }
 }
 
@@ -73,6 +109,21 @@ extension ViewController {
         setupNameLabel()
         setupIsAliveView()
         setupActivityIndicator()
+        
+        setupStatusSegmentedControl()
+        
+        setupPickerActivityIndicator()
+    }
+    
+    private func setupStatusSegmentedControl() {
+        view.addSubview(statusSegmentedControl)
+        statusSegmentedControl.selectedSegmentIndex = 0
+        statusSegmentedControl.addTarget(
+            self,
+            action: #selector(segmentedControlValueChanged),
+            for: .valueChanged
+        )
+        setupStatusSegmentedControlConstraints()
     }
     
     private func setupImageView() {
@@ -81,19 +132,10 @@ extension ViewController {
         imageView.image = UIImage(systemName: "photo")
         imageView.layer.cornerRadius = 30
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.contentMode = .scaleAspectFit
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+
         setupImageViewConstraints()
-    }
-    
-    private func setupImageViewConstraints() {
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -100),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
-            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
-        ])
     }
     
     private func setupNameLabel() {
@@ -102,35 +144,17 @@ extension ViewController {
         nameLabel.text = "Name\n     Status"
         nameLabel.numberOfLines = 0
         nameLabel.font = UIFont(name: "Impact", size: 22)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         setupNameLabelConstraints()
-    }
-    
-    private func setupNameLabelConstraints() {
-        NSLayoutConstraint.activate([
-            nameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 28),
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8)
-        ])
     }
     
     private func setupIsAliveView() {
         view.addSubview(isAliveView)
         
-        isAliveView.translatesAutoresizingMaskIntoConstraints = false
         setupIsAliveViewConstraints()
         
         view.layoutIfNeeded()
         isAliveView.backgroundColor = .gray
         isAliveView.layer.cornerRadius = isAliveView.frame.width / 2
-    }
-    
-    private func setupIsAliveViewConstraints() {
-        NSLayoutConstraint.activate([
-            isAliveView.widthAnchor.constraint(equalToConstant: 15),
-            isAliveView.heightAnchor.constraint(equalToConstant: 15),
-            isAliveView.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: -5.5),
-            isAliveView.leftAnchor.constraint(equalTo: nameLabel.leftAnchor)
-        ])
     }
     
     private func setUpButton() {
@@ -148,11 +172,86 @@ extension ViewController {
             for: .touchUpInside
         )
         
-        fetchButton.translatesAutoresizingMaskIntoConstraints = false
         setupButtonConstraints()
     }
     
+    private func setupPickerView() {
+        view.addSubview(linkPickerView)
+        setupPickerConstraints()
+    }
+    
+    private func setupPickerActivityIndicator() {
+        view.addSubview(pickerActivityIndicator)
+        
+        pickerActivityIndicator.hidesWhenStopped = true
+        
+        pickerActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            pickerActivityIndicator.centerXAnchor.constraint(equalTo: self.linkPickerView.centerXAnchor),
+            pickerActivityIndicator.centerYAnchor.constraint(equalTo: self.linkPickerView.centerYAnchor)
+        ])
+    }
+    
+    private func setupActivityIndicator() {
+        imageView.addSubview(imageActivityIndicator)
+                
+        imageActivityIndicator.backgroundColor = .white
+        imageActivityIndicator.layer.opacity = 0.5
+        imageActivityIndicator.layer.cornerRadius = 11
+        
+        imageActivityIndicator.hidesWhenStopped = true
+        
+        setupActivityIndicatorConstraints()
+    }
+}
+
+//MARK: Layout
+extension ViewController {
+    private func setupImageViewConstraints() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -100),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        ])
+    }
+    
+    private func setupNameLabelConstraints() {
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            nameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 28),
+            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8)
+        ])
+    }
+    
+    private func setupIsAliveViewConstraints() {
+        isAliveView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            isAliveView.widthAnchor.constraint(equalToConstant: 15),
+            isAliveView.heightAnchor.constraint(equalToConstant: 15),
+            isAliveView.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: -5.5),
+            isAliveView.leftAnchor.constraint(equalTo: nameLabel.leftAnchor)
+        ])
+    }
+    
+    private func setupStatusSegmentedControlConstraints() {
+        statusSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            statusSegmentedControl.bottomAnchor.constraint(equalTo: fetchButton.topAnchor, constant: -10),
+            statusSegmentedControl.centerXAnchor.constraint(equalTo: fetchButton.centerXAnchor),
+            statusSegmentedControl.widthAnchor.constraint(equalTo: fetchButton.widthAnchor)
+        ])
+    }
+    
     private func setupButtonConstraints() {
+        fetchButton.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             fetchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             fetchButton.bottomAnchor.constraint(equalTo: linkPickerView.topAnchor, constant: 10),
@@ -161,39 +260,23 @@ extension ViewController {
         ])
     }
     
-    private func setupPickerView() {
-        view.addSubview(linkPickerView)
-
-        linkPickerView.translatesAutoresizingMaskIntoConstraints = false
-        setupPickerConstraints()
-    }
-    
     private func setupPickerConstraints() {
+        linkPickerView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             linkPickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             linkPickerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
     
-    private func setupActivityIndicator() {
-        imageView.addSubview(activityIndicator)
-                
-        activityIndicator.backgroundColor = .white
-        activityIndicator.layer.opacity = 0.5
-        activityIndicator.layer.cornerRadius = 11
-        
-        activityIndicator.hidesWhenStopped = true
-        
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        setupActivityIndicatorConstraints()
-    }
-    
     private func setupActivityIndicatorConstraints() {
+        imageActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            activityIndicator.widthAnchor.constraint(equalToConstant: 45),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 45),
-            activityIndicator.centerXAnchor.constraint(equalTo: self.imageView.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: self.imageView.centerYAnchor)
+            imageActivityIndicator.widthAnchor.constraint(equalToConstant: 45),
+            imageActivityIndicator.heightAnchor.constraint(equalToConstant: 45),
+            imageActivityIndicator.centerXAnchor.constraint(equalTo: self.imageView.centerXAnchor),
+            imageActivityIndicator.centerYAnchor.constraint(equalTo: self.imageView.centerYAnchor)
         ])
     }
 }
@@ -201,26 +284,43 @@ extension ViewController {
 //MARK: Networking
 extension ViewController {
     private func getAllLinks(with url: String) {
+        pickerActivityIndicator.startAnimating()
+        linkPickerView.layer.opacity = 0.6
+        linkPickerView.isUserInteractionEnabled = false
+        statusSegmentedControl.layer.opacity = 0.3
+        statusSegmentedControl.isUserInteractionEnabled = false
+
         NetworkManager.shared.fetch(Page.self, from: url) { [weak self] result in
             switch result {
             case .success(let page):
-                
                 for index in 0..<page.results.count {
                     self?.allLinks.append(page.results[index].url)
                     self?.allNames.append(page.results[index].name)
                 }
-                
-                guard let nextPageLink = page.info.next else { return }
-                self?.nextPageLink = nextPageLink
-                
+                self?.selectedLinks = self?.allLinks ?? [""]
+                self?.selectedNames = self?.allNames ?? [""]
                 self?.selectedLink = self?.allLinks[1] ?? ""
                 self?.linkPickerView.reloadAllComponents()
                 self?.linkPickerView.selectRow(1, inComponent: 0, animated: true)
                 
-                if let nextPageLink = self?.nextPageLink, !nextPageLink.isEmpty {
-                    self?.getAllLinks(with: nextPageLink)
+                if self?.allNames.count == page.info.count {
+                    DispatchQueue.main.async {
+                        self?.pickerActivityIndicator.stopAnimating()
+                        self?.linkPickerView.layer.opacity = 1
+                        self?.linkPickerView.isUserInteractionEnabled = true
+                        self?.statusSegmentedControl.layer.opacity = 1
+                        self?.statusSegmentedControl.isUserInteractionEnabled = true
+                    }
+
+                    DispatchQueue.main.async {
+                        self?.getStatusArrays()
+                    }
                 }
-                                
+                
+                guard let nextPageLink = page.info.next else { return }
+                
+                self?.getAllLinks(with: nextPageLink)
+
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.linkPickerView.layer.opacity = 0
@@ -254,17 +354,52 @@ extension ViewController {
     
     private func fetchImage(with url: String) {
         DispatchQueue.main.async {
-            self.activityIndicator.startAnimating()
+            self.imageActivityIndicator.startAnimating()
         }
         
         NetworkManager.shared.fetchImage(from: url) { [weak self] result in
             switch result {
             case .success(let imageData):
                 self?.imageView.image = UIImage(data: imageData)
-                self?.activityIndicator.stopAnimating()
+                self?.imageActivityIndicator.stopAnimating()
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    private func getStatusArrays() {
+        let dispatchGroup = DispatchGroup()
+        
+        for link in allLinks {
+          
+            dispatchGroup.enter()
+            
+            NetworkManager.shared.fetch(Character.self, from: link) { [weak self] result in
+                defer {
+                    dispatchGroup.leave()
+                }
+                switch result {
+                case .success(let character):
+                    if character.status == "Alive" {
+                        self?.aliveLinks.append(character.url)
+                        self?.aliveNames.append(character.name)
+                    } else if character.status == "Dead" {
+                        self?.deadLinks.append(character.url)
+                        self?.deadNames.append(character.name)
+                    } else {
+                        self?.unknownLinks.append(character.url)
+                        self?.unknownNames.append(character.name)
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            print(self.unknownLinks.count)
         }
     }
 }

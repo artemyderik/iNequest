@@ -34,5 +34,69 @@
             landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D09753AD-0CC3-4866-AACD-247C840A6D58"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RickAndMortyCharacters/ViewControllers/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "getAllLinks(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D09753AD-0CC3-4866-AACD-247C840A6D58 - da1fc82324739889"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;RickAndMorty__Characters.Page, RickAndMorty__Characters.NetworkError&gt;) -&gt; () in RickAndMorty__Characters.ViewController.getAllLinks(with: Swift.String) -&gt; ()"
+                  moduleName = "RickAndMorty, Characters"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tema_derik/Desktop/swift/RickAndMortyCharacters/RickAndMortyCharacters/ViewControllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "284"
+                  endingLineNumber = "284"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "D09753AD-0CC3-4866-AACD-247C840A6D58 - da1fc823247398a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;RickAndMorty__Characters.Page, RickAndMorty__Characters.NetworkError&gt;) -&gt; () in RickAndMorty__Characters.ViewController.getAllLinks(with: Swift.String) -&gt; ()"
+                  moduleName = "RickAndMorty, Characters"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tema_derik/Desktop/swift/RickAndMortyCharacters/RickAndMortyCharacters/ViewControllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "283"
+                  endingLineNumber = "283"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DF11F04D-D714-46C6-9AA3-9A19A419E379"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RickAndMortyCharacters/ViewControllers/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
+            landmarkName = "getStatusArrays()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
