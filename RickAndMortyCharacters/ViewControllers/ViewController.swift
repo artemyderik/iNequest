@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     private var selectedLink = ""
     private var selectedLinks = [String]()
     private var selectedNames = [String]()
-        
+    
     private var allLinks = [String]()
     private var deadLinks = [String]()
     private var aliveLinks = [String]()
@@ -134,7 +134,7 @@ extension ViewController {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.contentMode = .scaleAspectFit
-
+        
         setupImageViewConstraints()
     }
     
@@ -186,7 +186,7 @@ extension ViewController {
         pickerActivityIndicator.hidesWhenStopped = true
         
         pickerActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             pickerActivityIndicator.centerXAnchor.constraint(equalTo: self.linkPickerView.centerXAnchor),
             pickerActivityIndicator.centerYAnchor.constraint(equalTo: self.linkPickerView.centerYAnchor)
@@ -195,7 +195,7 @@ extension ViewController {
     
     private func setupActivityIndicator() {
         imageView.addSubview(imageActivityIndicator)
-                
+        
         imageActivityIndicator.backgroundColor = .white
         imageActivityIndicator.layer.opacity = 0.5
         imageActivityIndicator.layer.cornerRadius = 11
@@ -210,7 +210,7 @@ extension ViewController {
 extension ViewController {
     private func setupImageViewConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -100),
@@ -221,7 +221,7 @@ extension ViewController {
     
     private func setupNameLabelConstraints() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             nameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 28),
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8)
@@ -230,7 +230,7 @@ extension ViewController {
     
     private func setupIsAliveViewConstraints() {
         isAliveView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             isAliveView.widthAnchor.constraint(equalToConstant: 15),
             isAliveView.heightAnchor.constraint(equalToConstant: 15),
@@ -251,7 +251,7 @@ extension ViewController {
     
     private func setupButtonConstraints() {
         fetchButton.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             fetchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             fetchButton.bottomAnchor.constraint(equalTo: linkPickerView.topAnchor, constant: 10),
@@ -262,7 +262,7 @@ extension ViewController {
     
     private func setupPickerConstraints() {
         linkPickerView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             linkPickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             linkPickerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
@@ -271,7 +271,7 @@ extension ViewController {
     
     private func setupActivityIndicatorConstraints() {
         imageActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             imageActivityIndicator.widthAnchor.constraint(equalToConstant: 45),
             imageActivityIndicator.heightAnchor.constraint(equalToConstant: 45),
@@ -289,21 +289,23 @@ extension ViewController {
         linkPickerView.isUserInteractionEnabled = false
         statusSegmentedControl.layer.opacity = 0.3
         statusSegmentedControl.isUserInteractionEnabled = false
-
+        
+        
         NetworkManager.shared.fetch(Page.self, from: url) { [weak self] result in
             switch result {
             case .success(let page):
-                for index in 0..<page.results.count {
-                    self?.allLinks.append(page.results[index].url)
-                    self?.allNames.append(page.results[index].name)
+                for index in 0..<(page.results?.count ??  10) {
+                    self?.allLinks.append(page.results?[index].url ?? "")
+                    self?.allNames.append(page.results?[index].name ?? "")
                 }
+                
                 self?.selectedLinks = self?.allLinks ?? [""]
                 self?.selectedNames = self?.allNames ?? [""]
                 self?.selectedLink = self?.allLinks[1] ?? ""
                 self?.linkPickerView.reloadAllComponents()
                 self?.linkPickerView.selectRow(1, inComponent: 0, animated: true)
                 
-                if self?.allNames.count == page.info.count {
+                if self?.allNames.count == page.info?.count {
                     DispatchQueue.main.async {
                         self?.pickerActivityIndicator.stopAnimating()
                         self?.linkPickerView.layer.opacity = 1
@@ -311,16 +313,15 @@ extension ViewController {
                         self?.statusSegmentedControl.layer.opacity = 1
                         self?.statusSegmentedControl.isUserInteractionEnabled = true
                     }
-
+                    
                     DispatchQueue.main.async {
                         self?.getStatusArrays()
                     }
                 }
                 
-                guard let nextPageLink = page.info.next else { return }
-                
+                guard let nextPageLink = page.info?.next else { return }
                 self?.getAllLinks(with: nextPageLink)
-
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.linkPickerView.layer.opacity = 0
@@ -330,12 +331,12 @@ extension ViewController {
         }
     }
     
+    
     private func fetchCharacter() {
-        NetworkManager.shared.fetch(Character.self, from: selectedLink){ [weak self] result in
+        NetworkManager.shared.fetchCharacter(from: selectedLink) { [weak self] result in
             switch result {
             case .success(let character):
                 self?.fetchImage(with: character.image)
-                
                 self?.nameLabel.text = "Name: \(character.name)\n     Status: \(character.status)"
                 
                 if character.status == "Alive" {
@@ -346,8 +347,8 @@ extension ViewController {
                     self?.isAliveView.backgroundColor = #colorLiteral(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
                 }
                 
-            case .failure(let error):
-                print(error)
+            case . failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
@@ -369,16 +370,8 @@ extension ViewController {
     }
     
     private func getStatusArrays() {
-        let dispatchGroup = DispatchGroup()
-        
         for link in allLinks {
-          
-            dispatchGroup.enter()
-            
             NetworkManager.shared.fetch(Character.self, from: link) { [weak self] result in
-                defer {
-                    dispatchGroup.leave()
-                }
                 switch result {
                 case .success(let character):
                     if character.status == "Alive" {
@@ -396,10 +389,6 @@ extension ViewController {
                     print(error)
                 }
             }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            print(self.unknownLinks.count)
         }
     }
 }

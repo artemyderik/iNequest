@@ -5,6 +5,7 @@
 //  Created by Артемий Дериглазов on 05.07.2023.
 //
 import Foundation
+import Alamofire
 
 enum Link: String, CaseIterable {
     case rickSanchez = "https://rickandmortyapi.com/api/character/1"
@@ -74,6 +75,22 @@ class NetworkManager {
                 completion(.success(imageData))
             }
         }
+    }
+    
+    func fetchCharacter(from url: String, completion: @escaping(Result<Character, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    guard let characterData = value as? [String: Any] else { return }
+                    let character = Character.init(characterData: characterData)
+                    completion(.success(character))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
     }
 }
 
